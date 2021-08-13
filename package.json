@@ -1,0 +1,24 @@
+{
+  "name": "bootcamp_react_igti",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RicardoCaldeira/bootcamp_react_igti.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RicardoCaldeira/bootcamp_react_igti/issues"
+  },
+  "homepage": "https://github.com/RicardoCaldeira/bootcamp_react_igti#readme",
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "type": "module"
+}
