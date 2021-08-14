@@ -19,6 +19,11 @@ function loadKpis(kpis) {
 	const totalRecuperados = document.getElementById("recovered");
 	totalRecuperados.innerText = kpis.Global.TotalRecovered.toLocaleString("PT");
 
+	const dataAtualizacao = document.getElementById("date");
+	const atualizacao = kpis.Date.slice(0, 10).split('-');
+	dataAtualizacao.innerText = atualizacao[2] + '/' + atualizacao[1] + '/' + atualizacao[0];
+
+
 	loadPizza(kpis);
 	loadBars(kpis);
 
@@ -31,7 +36,7 @@ function loadPizza(kpis) {
 		data: {
 			labels: ['Confirmados', 'Recuperados', 'Mortes'],
 			datasets: [{
-				label: '# of Votes',
+				//label: '# of Votes',
 				data: [
 					kpis.Global.TotalConfirmed,
 					kpis.Global.TotalRecovered,
@@ -75,33 +80,23 @@ function loadBars(kpis) {
 		kpis.Countries.splice(pos, 1);
 	}
 
-	for (let i = 0; i < top10.length; i++) {
-		console.log(top10[i]);
-	}
-
 	var bars = document.getElementById('barras');
 	var myBarsChart = new Chart(bars, {
 		type: 'bar',
 		data: {
-			labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+			labels: [
+				top10[0].Country, top10[1].Country, top10[2].Country, top10[3].Country, top10[4].Country, top10[5].Country, top10[6].Country, top10[7].Country, top10[8].Country, top10[9].Country
+			],
 			datasets: [{
-				label: '# of Votes',
-				data: [12, 19, 3, 5, 2, 3],
+				//label: null,
+				data: [
+					top10[0].TotalDeaths, top10[1].TotalDeaths, top10[2].TotalDeaths, top10[3].TotalDeaths, top10[4].TotalDeaths, top10[5].TotalDeaths, top10[6].TotalDeaths, top10[7].TotalDeaths, top10[8].TotalDeaths, top10[9].TotalDeaths
+				],
 				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
+					'rgba(153, 102, 255)'
 				],
 				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
+					'rgba(153, 102, 255, 1)'
 				],
 				borderWidth: 1
 			}]
@@ -110,6 +105,16 @@ function loadBars(kpis) {
 			scales: {
 				y: {
 					beginAtZero: true
+				}
+			},
+			responsive: true,
+			plugins: {
+				legend: {
+					position: 'top'
+				},
+				title: {
+					display: true,
+					text: "Total de mortes por país - Top 10"
 				}
 			}
 		}
