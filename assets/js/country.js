@@ -51,15 +51,15 @@ function loadCountries(countries) {
 
 function aplicar() {
 
-	let dataInicio = document.getElementById("date_start").value;
+	let dataInicioAux = document.getElementById("date_start").value;
 	const dataFim = document.getElementById("date_end").value;
 	const pais = document.getElementById("cmbCountry").value;
 	const dados = document.getElementById("cmbData").value;
 
-	dataInicio = dataInicio.split('-');
-
 	console.log(dataFim);
-	dataInicio = `${dataInicio[0]}-${dataInicio[1]}-${dataInicio[2]-1}`; // tratar pra quando for dia 1º
+	dataInicioAux = dataInicioAux.split('-');
+	console.log(dataInicioAux);
+	const dataInicio = new Date(dataInicioAux[0], dataInicioAux[1]-1, dataInicioAux[2]-1);
 	console.log(dataInicio);
 
 	(async () => {
@@ -81,6 +81,8 @@ function loadKpis(kpis) {
 }
 
 function loadChart(countryData, dados) {
+
+	console.log(countryData);
 
 	myChart.destroy();
 
