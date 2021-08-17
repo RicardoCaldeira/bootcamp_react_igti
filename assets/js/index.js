@@ -2,7 +2,6 @@
 	
 	(async () => {
 		const kpis = await axios.get("https://api.covid19api.com/summary");
-		console.log(kpis.data);
 		loadKpis(kpis.data);
 	})();
 
