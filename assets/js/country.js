@@ -116,7 +116,7 @@ function loadChart(countryData, dados) {
 		datasetsAux = [{
 			label: `Número de casos confirmados`,
 			data: confirmed,
-			backgroundColor: 'rgb(60, 186, 159, 0.1)', //amarelo,
+			backgroundColor: 'rgb(60, 186, 159, 0.1)',
 			borderColor: 'rgb(60, 186, 159)'
 		},
 		{
@@ -126,7 +126,7 @@ function loadChart(countryData, dados) {
 			borderColor: 'rgb(255, 140, 13)'
 		}];
 		for (let i = 0; i < countryData.length; i++) {
-			datasetsAux[1].data.push(confirmedSum / countryData.length);
+			datasetsAux[1].data.push(confirmedSum / (countryData.length-1));
 		}
 	} else if (dados === "Deaths") {
 		datasetsAux = [{
@@ -142,7 +142,7 @@ function loadChart(countryData, dados) {
 			borderColor: 'rgb(255, 140, 13)'
 		}];
 		for (let i = 0; i < countryData.length; i++) {
-			datasetsAux[1].data.push(deathsSum / countryData.length);
+			datasetsAux[1].data.push(deathsSum / (countryData.length-1));
 		}
 	} else {
 		datasetsAux = [{
@@ -158,7 +158,7 @@ function loadChart(countryData, dados) {
 			borderColor: 'rgb(255, 140, 13)'
 		}];
 		for (let i = 0; i < countryData.length; i++) {
-			datasetsAux[1].data.push(recoveredSum / countryData.length);
+			datasetsAux[1].data.push(recoveredSum / (countryData.length-1));
 		}
 	}
 
