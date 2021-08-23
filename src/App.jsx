@@ -1,4 +1,5 @@
 import Investiments from "./components/Investiments";
+import { ALL_INVESTIMENTS } from "./data/investiments_data";
 
 export default function App() {
   console.log('Teste no console do navegador');
@@ -15,7 +16,9 @@ export default function App() {
 
       <main>
         <div className="container mx-auto p-4">
-          <Investiments fundo="Ações"></Investiments>
+          {ALL_INVESTIMENTS.investments.map(investiment => (
+              <ul className="border p-2 mb-2"><Investiments key={investiment.id} id={investiment.id} description={investiment.description}></Investiments></ul>
+          ))}
         </div>
       </main>
     </div>
