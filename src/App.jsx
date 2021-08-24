@@ -17,7 +17,7 @@ export default function App() {
       <main>
         <div className="container mx-auto p-4">
           {ALL_INVESTIMENTS.investments.map(investiment => (
-              <ul className="border p-2 mb-2"><Investiments key={investiment.id} id={investiment.id} description={investiment.description}></Investiments></ul>
+              <ul key={investiment.id} className="border p-2 mb-2"><Investiments id={investiment.id} description={investiment.description}></Investiments></ul>
           ))}
         </div>
       </main>

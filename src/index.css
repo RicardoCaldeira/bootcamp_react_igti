@@ -18,3 +18,11 @@ code {
   font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas,
     'Courier New', monospace;
 }
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
