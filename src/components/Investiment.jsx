@@ -23,7 +23,7 @@ export default function Investiment({report, previous}) {
 		<div className="border p-2">
 			<span className="">{report.month < 10 ? 0 : ''}{report.month}/{report.year}</span>
 			<span className="ml-10">R$ {report.value.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
-			<span className={`${getRendimentoMensal() > 0 ? "green" : "red"} float-right`}>{calcRendimentoMensal()}</span>
+			<span className={`${getRendimentoMensal() === 0 ? "" : (getRendimentoMensal() > 0 ? "green" : "red")} float-right`}>{calcRendimentoMensal()}</span>
 		</div>
 	)
 }
