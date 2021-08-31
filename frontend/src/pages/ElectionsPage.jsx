@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CandidateCard from "../components/CandidateCard";
 import Header from "../components/Header";
 import Select from "../components/Select";
 
@@ -20,7 +21,11 @@ export default function ElectionsPage() {
         try {
 
           setCities(await apiGetAllCities());
-          setCity(cities.filter((c)=> c.id === selectedCityId));
+          cities.forEach(c => {
+            if(c.id === selectedCityId) {
+              setCity(c);
+            }
+          });
 
           setAllElections(await apiGetAllElections());
           const electionAux = allElections.filter((election) => {return election.cityId === selectedCityId})
@@ -29,9 +34,19 @@ export default function ElectionsPage() {
           setAllCandidates (await apiGetAllCandidates());
           let candidatesAux = [];
           election.forEach(e => {
-            candidatesAux.push(allCandidates.filter((cand) => {return e.candidateId === cand.id }))
+            allCandidates.forEach(c => {
+              if(e.candidateId === c.id) {
+                candidatesAux.push(c);
+              }
+            });
           });
           setCandidates(candidatesAux);
+
+          //debugger;
+          console.log(cities);
+          console.log(city);
+          console.log(election);
+          console.log(candidates);
 
         } catch (error) {
           // setError(error.message);
@@ -43,6 +58,15 @@ export default function ElectionsPage() {
 
   function handleCitySelect(selectedCity) {
     //console.log(selectedCity);
+  }
+
+  function getCandidate(e) {
+    candidates.forEach(candidate => {
+      if(candidate.id === e.candidateId) {
+        debugger;
+        return candidate;
+      }
+    })
   }
 
   return (
@@ -57,22 +81,22 @@ export default function ElectionsPage() {
               </div>
               <div className="p-4 border m-4">
                 <div className="text-center">
-                  <h2 className="font-bold">{`Eleição em ${city[0].name}`}</h2>
+                  <h2 className="font-bold">{`Eleição em ${city.name}`}</h2>
                   <div className="flex flex-row space-x-2 justify-center m-2">
-                    <span className="font-semibold">{`Total de eleitores: `}</span>{city[0].votingPopulation.toLocaleString("pt-BR")}
-                    <span className="font-semibold">{`Abstenção: `}</span>{city[0].absence.toLocaleString("pt-BR")}
-                    <span className="font-semibold">{`Abstenção: `}</span>{city[0].presence.toLocaleString("pt-BR")}
+                    <span className="font-semibold">{`Total de eleitores: `}</span>{city.votingPopulation.toLocaleString("pt-BR")}
+                    <span className="font-semibold">{`Abstenção: `}</span>{city.absence.toLocaleString("pt-BR")}
+                    <span className="font-semibold">{`Abstenção: `}</span>{city.presence.toLocaleString("pt-BR")}
                   </div>
                   <span>{candidates.length-1} candidatos</span>
-                  <>
-                    {election.map(el => {
-                      return <Candidate
-                        key={el.id}
-                        votes={el.votes}
-                        candidate={candidates.filter((candidate => candidate.id === el.candidateId))}
+                  <div className={"shadow-lg p-4 m-2 w-80 h-48 flex flex-row"}>
+                    {election.map(e => {
+                      return <CandidateCard
+                        key={e.id}
+                        votes={e.votes}
+                        candidate={getCandidate(e)}
                       />
                     })}
-                  </>
+                  </div>
                 </div>
               </div>
           </main>
