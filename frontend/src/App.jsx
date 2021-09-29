@@ -1,9 +1,9 @@
-import ElectionsPage from "./pages/ElectionsPage";
+import TabelaBrasileirao from "./pages/TabelaBrasileirao";
 
 export default function App() {
   return (
     <div>
-      <ElectionsPage />
+      <TabelaBrasileirao />
     </div>
   );
 }

@@ -1,19 +1,19 @@
 export default function Select({
-    cities = [],
-    onCitySelect = null
+    years = [],
+    onYearSelect = null
 }) {
 
-    function handleCitySelect(e) {
-        if (onCitySelect) {
-            onCitySelect(e.target.value);
+    function handleYearSelect(e) {
+        if (onYearSelect) {
+            onYearSelect(e.target.value);
         }
     }
 
     return (
         <div>
-            <select onChange={handleCitySelect}>
-                {cities.map(city => (
-                    <option key={city.id} value={city.id}>{city.name}</option>
+            <select onChange={handleYearSelect}>
+                {years.map(year => (
+                    <option key={year} value={year}>{year}</option>
                 ))}
             </select>
         </div>
