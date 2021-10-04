@@ -46,13 +46,59 @@ export default function TabelaBrasileirao() {
 					teams.push(team2);
 				});
 
-				const timesOrdenados = _.orderBy(
+				teams = _.orderBy(
 					teams,
 					["pontuacao_geral.total_pontos", "pontuacao_geral.total_vitorias", "pontuacao_geral.saldo", "pontuacao_geral.total_gols_marcados"],
 					["desc", "desc", "desc", "desc"]
 				);
 
-				console.log("ordenados", timesOrdenados);
+				setTeamsData(teams);
+
+			} catch (error) {
+				// setError(error.message);
+			}
+		}
+		getData();
+	}, []);
+
+	useEffect(() => {
+		async function getData() {
+			try {
+				let backendData = await apiGetChampionshipYearData(year);
+
+				backendData = _.maxBy(backendData, "numero");
+				
+				let teams = [];	
+				backendData.partidas.forEach(partida => {
+
+					const team = {
+						name: "",
+						pontuacao_geral: {},
+					};
+	
+					const team2 = {
+						name: "",
+						pontuacao_geral: {},
+					};
+
+					team.name = partida.mandante;
+					team.pontuacao_geral = partida.pontuacao_geral_mandante;
+					const saldo = partida.pontuacao_geral_mandante.total_gols_marcados - partida.pontuacao_geral_mandante.total_gols_sofridos;
+					team.pontuacao_geral = {...team.pontuacao_geral, "saldo": saldo}
+					teams.push(team);
+
+					team2.name = partida.visitante;
+					team2.pontuacao_geral = partida.pontuacao_geral_visitante;
+					const saldo2 = partida.pontuacao_geral_visitante.total_gols_marcados - partida.pontuacao_geral_visitante.total_gols_sofridos;
+					team2.pontuacao_geral = {...team2.pontuacao_geral, "saldo": saldo2}
+					teams.push(team2);
+				});
+
+				teams = _.orderBy(
+					teams,
+					["pontuacao_geral.total_pontos", "pontuacao_geral.total_vitorias", "pontuacao_geral.saldo", "pontuacao_geral.total_gols_marcados"],
+					["desc", "desc", "desc", "desc"]
+				);
 
 				setTeamsData(teams);
 
@@ -62,10 +108,10 @@ export default function TabelaBrasileirao() {
 		}
 		getData();
 
-	}, []);
+	}, [year]);
 
 	function handleYearSelect(selectedYear) {
-		console.log(selectedYear);
+		setYear(selectedYear);
 	}
 
 	return (
@@ -79,24 +125,14 @@ export default function TabelaBrasileirao() {
 					<br/>
 					<h2>Classificação do campeonato brasileiro de {year}</h2>
 				</div>
+				<div>
+					<ul>
+
+					</ul>
+				</div>
 			</main>
 
 			{console.log(teamsData)}
 		</div>
 	)
 }
-
-
-/*  data.sort((a, b) => {
-        let x = a.Country.toUpperCase();
-        let y = b.Country.toUpperCase();
-
-        return x === y ? 0 : x > y ? 1 : -1;
-    });
-
-	let countriesDeathsSorted = _.orderBy(
-    json.Countries,
-    ["TotalDeaths", "Country"],
-    ["desc", "asc"]
-  );
-*/
