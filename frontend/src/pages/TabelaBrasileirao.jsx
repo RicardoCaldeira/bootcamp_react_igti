@@ -4,6 +4,7 @@ import Select from "../components/Select";
 import _ from "lodash";
 
 import { apiGetChampionshipYearData } from '../services/apiService'
+import Team from '../components/Team';
 
 export default function TabelaBrasileirao() {
 
@@ -12,6 +13,7 @@ export default function TabelaBrasileirao() {
 	]
 	const [year, setYear] = useState(years[0]);
 	const [teamsData, setTeamsData] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		async function getData() {
@@ -53,7 +55,7 @@ export default function TabelaBrasileirao() {
 				);
 
 				setTeamsData(teams);
-
+				setLoading(false);
 			} catch (error) {
 				// setError(error.message);
 			}
@@ -64,6 +66,7 @@ export default function TabelaBrasileirao() {
 	useEffect(() => {
 		async function getData() {
 			try {
+				setLoading(true);
 				let backendData = await apiGetChampionshipYearData(year);
 
 				backendData = _.maxBy(backendData, "numero");
@@ -101,6 +104,7 @@ export default function TabelaBrasileirao() {
 				);
 
 				setTeamsData(teams);
+				setLoading(false);
 
 			} catch (error) {
 				// setError(error.message);
@@ -114,25 +118,56 @@ export default function TabelaBrasileirao() {
 		setYear(selectedYear);
 	}
 
-	return (
-		<div>
-			<Header>tabela-brasileirão</Header>
-			<main>
-				<div className="container mx-auto p-4 text-center">
+	let mainJsx = (
+		<div className="flex justify-center my-4">
+		  Carregando...
+		</div>
+	);
+
+	if (!loading) {
+		mainJsx = (
+			<div className="mb-5">
+				<div className="mx-auto p-4 text-center">
 					<Select years={years}
 						onYearSelect={handleYearSelect}
+						selectedYear={year}
 					/>
 					<br/>
 					<h2>Classificação do campeonato brasileiro de {year}</h2>
 				</div>
-				<div>
-					<ul>
 
-					</ul>
+				<div className="flex justify-center mt-5">
+					<table>
+						<thead>
+							<tr className="">
+								<th>{''}</th>
+								<th>{''}</th>
+								<th>{''}</th>
+								<th>P</th>
+								<th>V</th>
+								<th>E</th>
+								<th>D</th>
+								<th>GP</th>
+								<th>GC</th>
+								<th>S</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{teamsData.map((team, index) => (
+								<tr key={index}><Team pos={index+1} team={team}></Team></tr>
+							))}
+						</tbody>
+					</table>
 				</div>
-			</main>
+			</div>
+		)
+	}
 
-			{console.log(teamsData)}
-		</div>
+	return (
+		<>
+			<Header>tabela-brasileirão</Header>
+			<main>{mainJsx}</main>
+		</>
 	)
 }
