@@ -127,15 +127,6 @@ export default function TabelaBrasileirao() {
 	if (!loading) {
 		mainJsx = (
 			<div className="mb-5">
-				<div className="mx-auto p-4 text-center">
-					<Select years={years}
-						onYearSelect={handleYearSelect}
-						selectedYear={year}
-					/>
-					<br/>
-					<h2>Classificação do campeonato brasileiro de {year}</h2>
-				</div>
-
 				<div className="flex justify-center mt-5">
 					<table>
 						<thead>
@@ -167,6 +158,14 @@ export default function TabelaBrasileirao() {
 	return (
 		<>
 			<Header>tabela-brasileirão</Header>
+			<div className="mx-auto p-4 text-center">
+				<Select years={years}
+					onYearSelect={handleYearSelect}
+					selectedYear={year}
+				/>
+				<br/>
+				<h2>Classificação do campeonato brasileiro de {year}</h2>
+			</div>
 			<main>{mainJsx}</main>
 		</>
 	)
